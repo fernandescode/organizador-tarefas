@@ -1,4 +1,14 @@
+from pathlib import Path
+
 tarefas = []
+arquivo_tarefas = Path("tarefas.txt")
+
+if arquivo_tarefas.exists():
+    with open(arquivo_tarefas, "r") as arquivo:
+        for linha in arquivo:
+            tarefa = linha.strip()
+            tarefas.append(tarefa)
+            
 opcao = ""
 
 while opcao != "3":
@@ -19,6 +29,8 @@ while opcao != "3":
     elif opcao == "1":
         tarefa = input("Digite a tarefa: ")
         tarefas.append(tarefa)
+        with open(arquivo_tarefas, "a") as arquivo:
+            arquivo.write(tarefa + "\n")
         print("Tarefa cadastrada:", tarefa)
         
     elif opcao == "3":
