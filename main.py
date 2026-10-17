@@ -11,11 +11,12 @@ if arquivo_tarefas.exists():
             
 opcao = ""
 
-while opcao != "3":
+while opcao != "4":
     print("== ORGANIZADOR DE TAREFAS ==")
     print("1 - Adicionar tarefas")
     print("2 - Listar tarefas")
-    print("3 - Sair")
+    print("3 - Excluir tarefa")
+    print("4 - Sair")
 
     opcao = input("Escolha a opção: ")
 
@@ -23,17 +24,42 @@ while opcao != "3":
         if len(tarefas) == 0:
             print("Nenhuma tarefa cadastrada!")
         else:
-            for tarefa in tarefas:
-                print(tarefa)
+            for indice, tarefa in enumerate(tarefas, start=1):
+                print(indice, "-", tarefa)
                 
     elif opcao == "1":
-        tarefa = input("Digite a tarefa: ")
+        tarefa = input("Digite a tarefa: ").strip()
+        if not tarefa:
+            print("A tarefa não pode ficar vazia!")
+            continue
+
         tarefas.append(tarefa)
+
         with open(arquivo_tarefas, "a") as arquivo:
             arquivo.write(tarefa + "\n")
         print("Tarefa cadastrada:", tarefa)
         
     elif opcao == "3":
+        if len(tarefas) == 0:
+            print("Nenhuma tarefa cadastrada!")
+        else:
+            for indice, tarefa in enumerate(tarefas, start=1):
+                print(indice, "-", tarefa)
+                escolha = input("Digite o número da tarefa que deseja excluir: ")
+                try:
+                escolha = int(escolha)
+            except ValueError:
+                print("Digite um número válido!")
+                continue
+            if 1 <= escolha <= len(tarefas):
+                tarefa_removida = tarefas.pop(escolha - 1)
+                print("Tarefa removida:", tarefa_removida)
+                with open(arquivo_tarefas, "w") as arquivo:
+                    for tarefa in tarefas:
+                        arquivo.write(tarefa + "\n")
+            else:
+                print("Número de tarefa inválido!")
+                elif opcao == "4":
         print("Saindo do organizador de tarefas...")
         
     else:
