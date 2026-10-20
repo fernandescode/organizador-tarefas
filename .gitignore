@@ -1,1 +1,3 @@
 tarefas.txt
+__pycache__/
+*.py[cod]
